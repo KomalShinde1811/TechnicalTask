@@ -10,11 +10,12 @@ namespace BradyTechnicalTask
     {
         static void Main(string[] args)
         {
-            var inputFolderPath = ConfigurationManager.AppSettings["InputFolder"];
-            if (Directory.Exists(inputFolderPath))
+
+            var path = ConfigurationManager.AppSettings["InputFolder"];
+            if (Directory.Exists(path))
             {
                 FileSystemWatcher watcher = new FileSystemWatcher();
-                watcher.Path = inputFolderPath;
+                watcher.Path = path;
                 watcher.Filter = "*.xml";
                 watcher.Created += OnNewXmlFileAdded;
                 //watcher.Changed += OnNewXmlFileAdded;
@@ -23,13 +24,13 @@ namespace BradyTechnicalTask
             }
             else
             {
-                Console.WriteLine($"Input folder does not exist: {inputFolderPath}");
+                Console.WriteLine($"Input folder does not exist: {path}");
             }
 
         }
         private static void OnNewXmlFileAdded(object sender, FileSystemEventArgs e)
         {
-            Console.WriteLine($"New XML file added: {e.Name}");
+            Console.WriteLine($"File added: {e.Name}");
             var xmlGeneration = new XmlGeneration();
             xmlGeneration.GenerateXml(e.Name, ConfigurationManager.AppSettings["InputFolder"]);
         }

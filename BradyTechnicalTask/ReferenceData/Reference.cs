@@ -44,6 +44,14 @@ namespace BradyTechnicalTask.ReferenceData
              { "Coal","High"  },
 
         };
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string BackSlash = "\\";
+        /// <summary>
+        /// 
+        /// </summary>
+        public static readonly string XmlExtension = ".xml";
     };
 
 
