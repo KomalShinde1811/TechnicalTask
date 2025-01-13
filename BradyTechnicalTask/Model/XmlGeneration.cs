@@ -13,7 +13,7 @@ namespace BradyTechnicalTask.Model
     {
         public void GenerateXml(string filename,string inputFolderPath)
         {
-            var data = MapXmlToGenerationReport(inputFolderPath+ Reference.BackSlash + filename);
+            var data = MapXmlToGenerationReport(filename);
             var outputData = new GenerationOutput()
             {
                 Totals = TotalGenerationsCalculation(data.Generators.ToList()),
@@ -146,7 +146,7 @@ namespace BradyTechnicalTask.Model
         private void GenerateOutPutFile(GenerationOutput generationOutput, string filename, string inputFolderPath)
         {
             string outpuytFilename = filename.Replace(inputFolderPath, string.Empty);
-            var filePath = ConfigurationManager.AppSettings["OutputFolder"] + Reference.BackSlash + outpuytFilename.Replace(Reference.XmlExtension, string.Empty) + "-Result.xml";
+            var filePath = ConfigurationManager.AppSettings["OutputFolder"] + outpuytFilename.Replace(Reference.XmlExtension, string.Empty) + "-Result.xml";
             var serializer = new XmlSerializer(typeof(GenerationOutput));
             using (var writer = new StreamWriter(filePath))
             {
