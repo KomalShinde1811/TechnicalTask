@@ -51,6 +51,7 @@
     <Compile Include="Model\Generator.cs" />
     <Compile Include="Model\MaxEmissionGenerators.cs" />
     <Compile Include="Model\Totals.cs" />
+    <Compile Include="Model\XmlGeneration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceData\Reference.cs" />
