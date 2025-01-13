@@ -14,42 +14,18 @@ namespace BradyTechnicalTask
             var path = ConfigurationManager.AppSettings["InputFolder"];
             if (Directory.Exists(path))
             {
-                Console.WriteLine($"Input folder exists: {path}");
-
-                var files = Directory.GetFiles(path, "*.xml");
-                if (files.Length > 0)
-                {
-                    Console.WriteLine("XML files found:");
-                    foreach (var file in files)
-                    {
-                        var xmlGeneration = new XmlGeneration();
-                        xmlGeneration.GenerateXml(file, path);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No XML files found in the folder.");
-                }
+                FileSystemWatcher watcher = new FileSystemWatcher();
+                watcher.Path = path;
+                watcher.Filter = "*.xml";
+                watcher.Created += OnNewXmlFileAdded;
+                //watcher.Changed += OnNewXmlFileAdded;
+                watcher.EnableRaisingEvents = true;
+                Console.ReadLine();
             }
             else
             {
                 Console.WriteLine($"Input folder does not exist: {path}");
             }
-            //var inputFolderPath = ConfigurationManager.AppSettings["InputFolder"];
-            //Console.WriteLine($"Input folder exist: {inputFolderPath}");
-            //if (Directory.Exists(inputFolderPath))
-            //{
-            //    FileSystemWatcher watcher = new FileSystemWatcher();
-            //    watcher.Path = inputFolderPath;
-            //    watcher.Filter =".xml";
-            //    watcher.Created += OnNewXmlFileAdded;
-            //    watcher.EnableRaisingEvents = true;
-            //    Console.ReadLine();
-            //}
-            //else
-            //{
-            //    Console.WriteLine($"Input folder does not exist: {inputFolderPath}");
-            //}
 
         }
         private static void OnNewXmlFileAdded(object sender, FileSystemEventArgs e)
