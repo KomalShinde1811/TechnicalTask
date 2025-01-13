@@ -3,6 +3,7 @@ using System.Configuration;
 using System.IO;
 using BradyTechnicalTask.Model;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BradyTechnicalTask
 {
@@ -17,8 +18,12 @@ namespace BradyTechnicalTask
                 FileSystemWatcher watcher = new FileSystemWatcher();
                 watcher.Path = path;
                 watcher.Filter = "*.xml";
-                watcher.Created += OnNewXmlFileAdded;
-                //watcher.Changed += OnNewXmlFileAdded;
+                watcher.Created += async (sender, e) =>
+                {
+                    if (e.ChangeType == WatcherChangeTypes.Created)
+                    {
+                        await OnNewXmlFileAdded(e.FullPath);
+                    }
                 };
                 watcher.EnableRaisingEvents = true;
                 Console.ReadLine();
@@ -29,11 +34,12 @@ namespace BradyTechnicalTask
             }
 
         }
-        private static void OnNewXmlFileAdded(object sender, FileSystemEventArgs e)
+        private static async Task OnNewXmlFileAdded(string fullPath)
         {
-            Console.WriteLine($"File added: {e.Name}");
+            await Task.Delay(500);
+            Console.WriteLine($"File added: {fullPath}");
             var xmlGeneration = new XmlGeneration();
-            xmlGeneration.GenerateXml(e.Name, ConfigurationManager.AppSettings["InputFolder"]);
+            xmlGeneration.GenerateXml(fullPath, ConfigurationManager.AppSettings["InputFolder"]);
         }
     }
 }
