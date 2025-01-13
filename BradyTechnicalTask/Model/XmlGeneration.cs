@@ -11,28 +11,22 @@ namespace BradyTechnicalTask.Model
 {
     public class XmlGeneration
     {
-        public void GenerateXml(string path,string inputFolderPath)
+        public void GenerateXml(string filename,string inputFolderPath)
         {
-            var data = MapXmlToGenerationReport(path);
+            var data = MapXmlToGenerationReport(inputFolderPath+"\\"+ filename);
             var outputData = new GenerationOutput()
             {
                 Totals = TotalGenerationsCalculation(data.Generators.ToList()),
                 MaxEmissionGenerators = DailyEmissionCalculation(data.Generators.Where(x => x.EmissionsRating != 0).ToList()),
                 ActualHeatRates = ActualHeatRateCalculation(data.Generators.Where(x => x.ActualNetGeneration != 0).ToList())
             };
-            GenerateOutPutFile(outputData, path, inputFolderPath);
+            GenerateOutPutFile(outputData, filename, inputFolderPath);
         }
         private GenerationReport MapXmlToGenerationReport(string filePath)
         {
             try
             {
                 var report = new GenerationReport();
-                //var serializer = new XmlSerializer(typeof(GenerationReport));
-
-                //using (var reader = new StreamReader(filePath))
-                //{
-                //    return (GenerationReport)serializer.Deserialize(reader);
-                //}
                 var names = new List<string>();
                 var data = new List<Generator>();
                 XDocument xdoc = XDocument.Load(filePath);
@@ -152,7 +146,7 @@ namespace BradyTechnicalTask.Model
         private void GenerateOutPutFile(GenerationOutput generationOutput, string filename, string inputFolderPath)
         {
             string outpuytFilename = filename.Replace(inputFolderPath, string.Empty);
-            var filePath = ConfigurationManager.AppSettings["OutputFolder"] + outpuytFilename.Replace(".xml", string.Empty) + "-Result.xml";
+            var filePath = ConfigurationManager.AppSettings["OutputFolder"] +"\\"+ outpuytFilename.Replace(".xml", string.Empty) + "-Result.xml";
             var serializer = new XmlSerializer(typeof(GenerationOutput));
             using (var writer = new StreamWriter(filePath))
             {
