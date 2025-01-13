@@ -19,6 +19,7 @@ namespace BradyTechnicalTask
                 watcher.Filter = "*.xml";
                 watcher.Created += OnNewXmlFileAdded;
                 //watcher.Changed += OnNewXmlFileAdded;
+                };
                 watcher.EnableRaisingEvents = true;
                 Console.ReadLine();
             }
