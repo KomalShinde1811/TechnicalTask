@@ -15,25 +15,10 @@ namespace BradyTechnicalTask
             {
                 FileSystemWatcher watcher = new FileSystemWatcher();
                 watcher.Path = inputFolderPath;
-
-                // Filter to watch only .xml files
                 watcher.Filter = "*.xml";
-
-                // Subscribe to the Created event (when a new file is added)
                 watcher.Created += OnNewXmlFileAdded;
-
-                // Start watching
+                //watcher.Changed += OnNewXmlFileAdded;
                 watcher.EnableRaisingEvents = true;
-
-                //var files = Directory.GetFiles(inputFolderPath, "*.xml");
-                //if (files.Length > 0)
-                //{
-                //    foreach (var file in files)
-                //    {
-                //        var xmlGeneration = new XmlGeneration();
-                //        xmlGeneration.GenerateXml(file, inputFolderPath);
-                //    }
-                //}
                 Console.ReadLine();
             }
             else
